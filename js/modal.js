@@ -152,6 +152,9 @@ function openModal(category) {
   // Show modal after content is ready
   modal.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
+  
+  // Сохраняем язык в sessionStorage для чекаута
+  sessionStorage.setItem('lang', currentLanguage);
 }
 
 // Function to close modal
@@ -225,6 +228,28 @@ document.addEventListener('DOMContentLoaded', function() {
       closeModal();
     }
   });
+
+  // Terms and Conditions modal
+  const termsLink = document.getElementById('terms-link');
+  if (termsLink) {
+    termsLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      // Скрываем стандартные заголовки
+      modalTitle.textContent = '';
+      modalPrice.textContent = '';
+      modalDescription.textContent = '';
+      // Загружаем success.html и вставляем в модалку
+      fetch('success.html')
+        .then(r => r.text())
+        .then(html => {
+          // Вырезаем только <body>...</body>
+          const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+          modalFormContainer.innerHTML = bodyMatch ? bodyMatch[1] : html;
+          modal.classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+        });
+    });
+  }
 });
 
 // Language switching functionality

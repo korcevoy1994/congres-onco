@@ -1,0 +1,154 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termeni și Condiții - National Oncology Congress 2025</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+        }
+        p, li {
+            color: #555;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TERMENI ȘI CONDIȚII</h1>
+        <p><strong>Stimate participant,</strong></p>
+        <p>Acești termeni și condiții sunt prezentați ca formă tip pentru suportul informațional în procesul achiziționării biletelor pentru <strong>National Oncology Congress 2025</strong> prin intermediul platformei <a href="http://www.onco.md">www.onco.md</a> de la maib. Vă rugăm să utilizați această pro-formă și, după necesitate, să modificați detaliile specifice pentru cazul dumneavoastră.</p>
+        <p><strong>Prezenții Termeni și Condiții de utilizare a platformei www.onco.md sunt aplicabile comenzilor pentru achiziționarea biletelor la National Oncology Congress 2025 oferite de Asociația Obștească „Societatea științifico-practică a Oncologilor din Republica Moldova” prin intermediul site-ului.</strong></p>
+        <p>Pentru folosirea în bune condiții a site-ului, vă recomandăm familiarizarea cu atenție a Termenilor și Condițiilor prezentate. Ne rezervăm dreptul de a face modificări ale acestor prevederi, fără o notificare prealabilă.</p>
+
+        <h2>1. DISPOZIȚII GENERALE</h2>
+        <p>Acest site este deținut de <strong>Asociația Obștească „Societatea științifico-practică a Oncologilor din Republica Moldova”</strong>. La înregistrarea comenzii pentru achiziționarea biletelor la <strong>National Oncology Congress 2025</strong>, Cumpărătorul acceptă Termenii și Condițiile de vânzare a biletelor, care sunt bazați pe legislația Republicii Moldova (în continuare – Termeni și Condiții) prezentate mai jos.</p>
+        <p>Utilizarea website-ului presupune acceptarea Termenilor și Condițiilor propuse de către <strong>Asociația Obștească „Societatea științifico-practică a Oncologilor din Republica Moldova”</strong>, în conformitate cu Legea nr. 284/2004 privind Comerțul Electronic. Relațiile dintre client și organizator sunt stabilite în baza Legii nr. 105/2003 cu privire la Protecția drepturilor consumatorului, și a altor acte normative adoptate în conformitate cu aceasta.</p>
+        <p>Organizatorul își rezervă dreptul de a modifica Termenii și Condițiile date, iar Cumpărătorul este obligat să monitorizeze modificările.</p>
+
+        <h2>2. PROTECȚIA DATELOR CU CARACTER PERSONAL</h2>
+        <p>Prin utilizarea site-ului <a href="http://www.onco.md">www.onco.md</a>, sunteți de acord în mod automat cu colectarea și prelucrarea datelor cu caracter personal, care sunt necesare pentru procesarea/confirmarea/executarea comenzilor pentru bilete.</p>
+        <p>Datele personale se prelucrează doar pentru scopuri legitime, precum acela de a furniza biletele pe care le comandați, promoții, Google Analytics, cookies și notificări/newsletter.</p>
+        <p>Toată informația ce conține date cu caracter personal este stocată și utilizată doar pentru perioada necesară atingerii scopurilor pentru care a fost colectată și în conformitate cu prevederile stabilite de Legea nr. 133/2011 privind protecția datelor cu caracter personal.</p>
+        <p>Noi folosim măsuri de securitate comerciale pentru a preveni accesul neautorizat, menținerea exactității datelor și pentru asigurarea utilizării corecte a informației de pe site. Transmiterea datelor pe internet sau prin rețea wireless nu poate fi protejată în totalitate. Prin urmare, la fel ca alte entități, noi nu putem garanta securitatea informației pe care o oferă Cumpărătorul, astfel, el va face acest lucru pe propria răspundere.</p>
+
+        <h2>3. ÎNREGISTRAREA ȘI ACHITAREA BILETELOR</h2>
+        <p>Achitarea biletelor este posibilă cu cardul de plată – la finalizarea comenzii veți primi confirmarea plății și biletul electronic pe adresa dumneavoastră de email.</p>
+        <p>Plata online se face în condiții de siguranță maximă folosind ca instrument de plată cardul de plată, care permite efectuarea de tranzacții online. După efectuarea plății veți primi o confirmare de plată pe adresa dumneavoastră de email.</p>
+        <p>Procesatorul de plată folosește un sistem securizat, bazat pe ultima versiune a standardului de securitate 3D-Secure, ceea ce înseamnă o nouă abordare globală a autentificării cumpărătorilor în tranzacții sigure online. Această măsură de siguranță presupune redirecționarea utilizatorului în momentul efectuării plății pe o pagină securizată maib unde autentificarea fiecărui deținător de card se face prin atribuirea unui cod de unică folosință pentru fiecare tranzacție online.</p>
+        <p>Rambursarea mijloacelor bănești se efectuează doar pe cardul de plată care a fost folosit pentru achiziție.</p>
+        <p><strong>Pentru efectuarea plății vor fi solicitate următoarele date:</strong></p>
+        <ul>
+            <li>Numărul cardului (16 cifre)</li>
+            <li>Data expirării (lună și an)</li>
+            <li>Codul CVC sau CVV (3 cifre)</li>
+            <li>Numele și prenumele de pe cardul de plată</li>
+        </ul>
+        <p>În cazul în care valuta cardului diferă de valuta tranzacției (MDL), atunci la convertirea sumei reținute din contul de card se vor aplica condițiile băncii emitente.</p>
+
+        <h2>4. LIVRAREA BILETELOR</h2>
+        <p>După înregistrarea comenzii, cumpărătorului i se oferă biletul electronic pentru <strong>National Oncology Congress 2025</strong> prin email, la adresa specificată în procesul de comandă.</p>
+        <p>Biletele electronice sunt trimise în termen de <strong>X ore</strong> de la confirmarea plății de către operatorii noștri. Vă rugăm să verificați și folderul de spam/junk al emailului dumneavoastră.</p>
+        <p>În cazul în care nu primiți biletul electronic în termenul specificat, vă rugăm să contactați organizatorul la <strong>+373 022 852 444</strong> sau prin email la <strong遵1><a href="mailto:societatea.onco@gmail.com">societatea.onco@gmail.com</a>.</p>
+        <p>Biletele electronice reprezintă accesul la eveniment și trebuie prezentate la intrare, fie în format digital, fie printat. Organizatorul își rezervă dreptul de a verifica valabilitatea biletelor la intrarea în eveniment.</p>
+
+        <h2>5. DREPTUL LA RETUR</h2>
+        <p>Conform Legii nr. 105-XV din 13 martie 2013 privind protecția consumatorilor, Cumpărătorul are dreptul de a solicita rambursarea biletului din anumite motive în timp de <strong>14 zile</strong> de la data achitării, cu condiția că cererea de rambursare este făcută cu cel puțin <strong>X zile</strong> înainte de data evenimentului (<strong>National Oncology Congress 2025</strong>). Mijloacele bănești sunt returnate pe cardul de pe care s-a efectuat cumpărătura.</p>
+        <p><strong>Biletele nu sunt returnabile sau schimbabile după data limită specificată sau în cazul în care evenimentul a avut loc.</strong></p>
+        <p><strong>Contactele în caz de retur:</strong> <strong>+373 022 852 444</strong></p>
+        <p><strong>Termenul de procesare a cererii de retur:</strong> <strong>X zile</strong></p>
+        <p><strong>Condițiile de retur:</strong> Biletele trebuie să fie neutilizate, iar cererea de retur trebuie să includă detaliile comenzii și motivul returnării.</p>
+
+        <h2>6. POLITICA DE CONFIDENȚIALITATE</h2>
+        <p>În conformitate cu prevederile Legii nr. 133/2011 privind protecția datelor cu caracter personal, organizatorul prelucrează date cu caracter personal. Datele cu caracter personal sunt prelucrate cu bună-credință și se face în temeiul și în conformitate cu prevederile legale. Prelucrarea datelor cu caracter personal se realizează prin mijloace mixte (automate și manuale), cu respectarea cerințelor legale și în condiții care să asigure securitatea, confidențialitatea și respectarea drepturilor persoanelor vizate.</p>
+        <p>Organizatorul colectează și prelucrează doar datele personale furnizate de consumatori la efectuarea comenzii: nume, prenume, număr de telefon, adresă de email.</p>
+        <p>Datele personale sunt utilizate exclusiv în scopul administrării site-ului, pentru a permite accesul la informații speciale, pentru livrarea biletelor sau pentru a contacta consumatorul în vederea confirmării participării la <strong>National Oncology Congress 2025</strong>. Prin prezenta informare, utilizatorii și consumatorii iau cunoștință despre faptul că li se vor prelucra și utiliza datele cu caracter personal (nume, prenume, număr de telefon, adresă de email). Organizatorul prelucrează datele cu caracter personal ale utilizatorilor și consumatorilor care sunt furnizate prin navigarea, folosirea și înregistrarea pe site-ul <a href="http://www.onco.md">www.onco.md</a>.</p>
+        <p>Orice informație furnizată de către utilizatorii și consumatorii site-ului <a href="http://www.onco.md">www.onco.md</a>, va fi considerată și va reprezenta consimțământul expres ca datele personale să fie folosite de organizator.</p>
+        <p>Organizatorul nu va dezvălui unei terțe părți niciuna dintre datele deținute, fără acordul persoanelor vizate și nu va comercializa, schimba, divulga aceste date cu alte persoane, cu excepțiile prevăzute de legislația în vigoare (la solicitarea instituțiilor publice ale statului, organele de drept, instanțelor de judecată, de asemenea autorizate să prelucreze date cu caracter personal).</p>
+        <p>Datele cu caracter personal pot fi prelucrate și utilizate de către organizator și în scopuri statistice și de promovare ulterioară a evenimentelor organizate de <strong>Asociația Obștească „Societatea științifico-practică a Oncologilor din Republica Moldova”</strong>.</p>
+        <p>Organizatorul îndeplinește cerințele de securitate a datelor cu caracter personal și asigură protecția datelor consumatorilor și le protejează pentru a nu fi pierdute, distruse, distorsionate/falsificate sau divulgate terțelor persoane.</p>
+        <p>Angajații organizatorului sunt obligați să respecte confidențialitatea datelor personale ale consumatorilor. Prelucrarea datelor cu caracter personal va fi realizată de persoana împuternicită a organizatorului.</p>
+        <p>Organizatorul utilizează metode și tehnologii de securitate conform prevederilor legale în vigoare.</p>
+        <p>Organizatorul nu colectează informații referitoare la tranzacții, cum ar fi nr. cardului, data expirării, țara de origine.</p>
+        <p><strong>Pentru mai multe detalii și informații, orice persoană interesată se poate adresa printr-un email la <a href="mailto:societatea.onco@gmail.com">societatea.onco@gmail.com</a> sau prin telefon la numărul <strong>+373 022 852 444</strong>.</strong></p>
+
+        <h2>7. DATELE DE CONTACT</h2>
+        <p><strong>Denumirea juridică a organizatorului:</strong> Asociația Obștească „Societatea științifico-practică a Oncologilor din Republica Moldova”</p>
+        <p><strong>IDNO:</strong> 1011620000784</p>
+        <p><strong>Adresa juridică:</strong> str. N. Testimițanu, 30, mun. Chișinău, Republica Moldova</p>
+        <p><strong>Adresa fizică:</strong> str. N. Testimițanu, 30, mun. Chișinău, Republica Moldova</p>
+        <p><strong>Telefon de contact:</strong> +373 022 852 444</p>
+        <p><strong>Email de contact:</strong> <a href="mailto:societatea.onco@gmail.com">societatea.onco@gmail.com</a></p>
+        <p><strong>IBAN:</strong> MD90ML000000002251202353</p>
+        <p><strong>BC „Moldindconbank” S.A. SWIFT:</strong> MOLDMD2X</p>
+    </div>
+</body>
+</html>

@@ -2,8 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Checkout</title>
+  <title>Checkout – National Oncology Congress 2025</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Confirm your registration and proceed to payment for the National Oncology Congress 2025.">
+  <meta property="og:title" content="Checkout – National Oncology Congress 2025">
+  <meta property="og:description" content="Confirm your registration and proceed to payment for the National Oncology Congress 2025.">
+  <meta property="og:image" content="https://cdn.prod.website-files.com/68415c88b59508eac8d22b81/684975d88fa093cce74539be_og-onc.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:title" content="Checkout – National Oncology Congress 2025">
+  <meta name="twitter:description" content="Confirm your registration and proceed to payment for the National Oncology Congress 2025.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link href="images/fav.png" rel="shortcut icon" type="image/png">
+  <link href="images/fav.png" rel="apple-touch-icon">
   <link href="css/normalize.css" rel="stylesheet">
   <link href="css/framework.css" rel="stylesheet">
   <link href="css/main.css" rel="stylesheet">
@@ -79,6 +89,42 @@
     .checkout-back-link:hover {
       color: #5d3e7e;
     }
+    .custom-checkbox {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #744f8c;
+      border-radius: 6px;
+      background: #fff;
+      outline: none;
+      cursor: pointer;
+      position: relative;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      box-shadow: 0 1px 4px #744f8c22;
+      vertical-align: middle;
+    }
+    .custom-checkbox:checked {
+      background: #744f8c;
+      border-color: #744f8c;
+    }
+    .custom-checkbox:checked::after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 2px;
+      width: 6px;
+      height: 12px;
+      border: solid #fff;
+      border-width: 0 3px 3px 0;
+      border-radius: 1px;
+      transform: rotate(45deg);
+      box-sizing: border-box;
+      transition: border-color 0.15s;
+    }
+    .custom-checkbox:focus {
+      box-shadow: 0 0 0 2px #744f8c44;
+    }
   </style>
 </head>
 <body>
@@ -95,9 +141,70 @@
     </ul>
     <div class="checkout-section-title">Your Information</div>
     <ul class="checkout-list" id="user-info-list"></ul>
-    <button class="checkout-btn" id="pay-btn">Pay</button>
+    <div style="margin-top: 24px; display: flex; align-items: flex-start; gap: 12px;">
+      <input type="checkbox" id="terms-checkbox" class="custom-checkbox">
+      <label for="terms-checkbox" style="font-size: 0.98em; color: #555; cursor: pointer; user-select: none;">I agree to the <a href="#" style="color: #744f8c; text-decoration: underline;">Terms and Conditions</a></label>
+    </div>
+    <button class="checkout-btn" id="pay-btn" disabled style="background: #ccc; color: #fff; cursor: not-allowed;">Pay</button>
+  </div>
+  <!-- Modal for Terms and Conditions -->
+  <div id="terms-modal" class="modal-wrapper hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content" id="terms-modal-content">
+      <button id="terms-modal-close" class="modal-close-button" style="position:absolute;top:1rem;right:1.5rem;background:none;border:none;font-size:2rem;cursor:pointer;">&times;</button>
+      <div id="terms-modal-body"></div>
+    </div>
   </div>
   <script>
+    // Получаем язык
+    const lang = sessionStorage.getItem('lang') || 'en';
+    const translations = {
+      en: {
+        back: '‹ Back',
+        checkout: 'Checkout',
+        ticket: 'Ticket',
+        type: 'Type:',
+        price: 'Price:',
+        info: 'Your Information',
+        pay: 'Pay',
+        agree: 'I agree to the ',
+        terms: 'Terms and Conditions'
+      },
+      ro: {
+        back: '‹ Înapoi',
+        checkout: 'Plată',
+        ticket: 'Bilet',
+        type: 'Tip:',
+        price: 'Preț:',
+        info: 'Informațiile Dvs.',
+        pay: 'Plătește',
+        agree: 'Sunt de acord cu ',
+        terms: 'Termenii și condițiile'
+      }
+    };
+    // Применяем переводы
+    document.querySelector('.checkout-back-link').innerText = translations[lang].back;
+    document.querySelector('.checkout-title').innerText = translations[lang].checkout;
+    document.querySelectorAll('.checkout-section-title')[0].innerText = translations[lang].ticket;
+    document.querySelectorAll('.checkout-section-title')[1].innerText = translations[lang].info;
+    document.querySelectorAll('.checkout-label')[0].innerText = translations[lang].type;
+    document.querySelectorAll('.checkout-label')[1].innerText = translations[lang].price;
+    document.getElementById('pay-btn').innerText = translations[lang].pay;
+    // Переводим чекбокс
+    document.querySelector('label[for="terms-checkbox"]').innerHTML = `${translations[lang].agree}<a href="#" style="color: #744f8c; text-decoration: underline;">${translations[lang].terms}</a>`;
+    // Навешиваем обработчик на ссылку Terms and Conditions
+    document.querySelector('label[for="terms-checkbox"] a').addEventListener('click', function(e) {
+      e.preventDefault();
+      fetch('termeni-si-conditii.html')
+        .then(r => r.text())
+        .then(html => {
+          const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+          document.getElementById('terms-modal-body').innerHTML = bodyMatch ? bodyMatch[1] : html;
+          document.getElementById('terms-modal').classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+        });
+    });
+
     // Получаем данные из sessionStorage (или localStorage)
     const ticketType = sessionStorage.getItem('ticketType') || '';
     const ticketPrice = sessionStorage.getItem('ticketPrice') || '';
@@ -106,17 +213,60 @@
     document.getElementById('ticket-type').textContent = ticketType;
     document.getElementById('ticket-price').textContent = ticketPrice;
 
+    const fieldLabels = {
+      en: {
+        'first-name': 'First Name:',
+        'last-name': 'Last Name:',
+        'idnp': 'Idnp:',
+        'phone': 'Phone:',
+        'email': 'Email:',
+        'society': 'Society:'
+      },
+      ro: {
+        'first-name': 'Prenume:',
+        'last-name': 'Nume:',
+        'idnp': 'IDNP:',
+        'phone': 'Telefon:',
+        'email': 'Email:',
+        'society': 'Societate:'
+      }
+    };
+
     const userInfoList = document.getElementById('user-info-list');
     for (const [key, value] of Object.entries(userData)) {
       const li = document.createElement('li');
-      li.innerHTML = `<span class="checkout-label">${key.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}:</span> <span class="checkout-value">${value}</span>`;
+      li.innerHTML = `<span class="checkout-label">${fieldLabels[lang][key] || key} </span> <span class="checkout-value">${value}</span>`;
       userInfoList.appendChild(li);
     }
 
+    const payBtn = document.getElementById('pay-btn');
+    const termsCheckbox = document.getElementById('terms-checkbox');
+    termsCheckbox.addEventListener('change', function() {
+      if (this.checked) {
+        payBtn.disabled = false;
+        payBtn.style.background = '#744f8c';
+        payBtn.style.cursor = 'pointer';
+      } else {
+        payBtn.disabled = true;
+        payBtn.style.background = '#ccc';
+        payBtn.style.cursor = 'not-allowed';
+      }
+    });
+
     document.getElementById('pay-btn').addEventListener('click', function() {
       alert('Redirecting to payment...');
-      // Здесь будет редирект на платёжку
+
     });
+
+    // Terms modal logic
+    document.getElementById('terms-modal-close').onclick = function() {
+      document.getElementById('terms-modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    };
+    document.querySelector('#terms-modal .modal-backdrop').onclick = function() {
+      document.getElementById('terms-modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    };
   </script>
 </body>
 </html> 

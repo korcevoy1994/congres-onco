@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment Error – National Oncology Congress 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/normalize.css" rel="stylesheet">
+  <link href="css/framework.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
+  <link href="css/modal.css" rel="stylesheet">
+  <link href="images/fav.png" rel="shortcut icon" type="image/png">
+  <style>
+    .centered-container {
+      max-width: 420px;
+      margin: 64px auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px 0 rgba(116,79,140,0.08);
+      padding: 40px 32px 32px 32px;
+      text-align: center;
+      font-family: inherit;
+    }
+    .error-icon {
+      width: 72px;
+      height: 72px;
+      margin-bottom: 24px;
+      display: inline-block;
+      border-radius: 16px;
+      box-shadow: 0 2px 8px #e74c3c55;
+      filter: grayscale(1) brightness(0.9) contrast(1.2);
+    }
+    .error-title {
+      color: #e74c3c;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .error-text {
+      color: #444;
+      font-size: 1.1em;
+      margin-bottom: 32px;
+    }
+    .error-btn {
+      background: #744f8c;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 1rem 0;
+      font-size: 1.1em;
+      font-weight: 700;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-top: 8px;
+    }
+    .error-btn:hover {
+      background: #5d3e7e;
+    }
+  </style>
+</head>
+<body>
+  <div class="centered-container">
+    <img src="images/error.svg" alt="Error" class="error-icon" style="width: 80px; height: 80px; margin-bottom: 24px;">
+    <div class="error-title" id="error-title">Payment Failed</div>
+    <div class="error-text" id="error-text">Unfortunately, your payment could not be processed. Please try again or contact support.</div>
+    <button class="error-btn" onclick="window.location.href='index.html'" id="error-btn">Go to Home</button>
+  </div>
+  <script>
+    const lang = sessionStorage.getItem('lang') || 'en';
+    const t = {
+      en: {
+        title: 'Payment Failed',
+        text: 'Unfortunately, your payment could not be processed. Please try again or contact support.',
+        btn: 'Go to Home'
+      },
+      ro: {
+        title: 'Plata a eșuat',
+        text: 'Din păcate, plata nu a putut fi procesată. Vă rugăm să încercați din nou sau să contactați suportul.',
+        btn: 'Înapoi la pagina principală'
+      }
+    };
+    document.getElementById('error-title').innerText = t[lang].title;
+    document.getElementById('error-text').innerText = t[lang].text;
+    document.getElementById('error-btn').innerText = t[lang].btn;
+  </script>
+</body>
+</html> 

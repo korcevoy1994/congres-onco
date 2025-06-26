@@ -93,12 +93,12 @@
 .registration-form {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 32px;
 }
 
 .input-wrapper {
   position: relative;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   width: 100%;
 }
 
@@ -154,7 +154,7 @@
   font-weight: 600;
   cursor: pointer;
   box-shadow: 0 2px 8px 0 rgba(116,79,140,0.08);
-  margin-top: 1rem;
+  margin-top: 0.3rem;
   transition: background 0.15s, box-shadow 0.15s;
 }
 
@@ -177,7 +177,7 @@
   font-family: inherit;
   font-weight: 500;
   cursor: pointer;
-  margin-top: 16px;
+  margin-top: 8px;
   padding: 12px 24px;
   box-shadow: none;
   transition: background 0.15s, border 0.15s, color 0.15s;
@@ -219,7 +219,7 @@
 .form-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.2rem 2rem;
+  gap: 1.2rem 1.5rem;
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
@@ -227,7 +227,7 @@
 
 .form-grid .input-wrapper {
   flex: 1 1 45%;
-  min-width: 260px;
+  min-width: 180px;
   margin-bottom: 0;
   width: auto;
   box-sizing: border-box;
@@ -244,12 +244,12 @@
 }
 
 .form-section {
-  margin-bottom: 2.2rem;
+  margin-bottom: 0.8rem;
 }
 .form-section-title {
   font-size: 1.1rem;
   font-weight: 600;
-  margin-bottom: 1.1rem;
+  margin-bottom: 0.3rem;
   color: #744f8c;
   letter-spacing: 0.01em;
 }
@@ -283,13 +283,14 @@
 }
 
 .radio-group {
-  margin-top: 1rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.5rem;
 }
 
 .radio-label {
   display: flex;
   align-items: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
   cursor: pointer;
 }
 
@@ -326,4 +327,15 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.input-wrapper input {
+  box-sizing: border-box;
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 0.3rem;
 } 

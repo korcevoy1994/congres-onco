@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment Success – National Oncology Congress 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/normalize.css" rel="stylesheet">
+  <link href="css/framework.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
+  <link href="css/modal.css" rel="stylesheet">
+  <link href="images/fav.png" rel="shortcut icon" type="image/png">
+  <style>
+    .centered-container {
+      max-width: 420px;
+      margin: 64px auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px 0 rgba(116,79,140,0.08);
+      padding: 40px 32px 32px 32px;
+      text-align: center;
+      font-family: inherit;
+    }
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      margin-bottom: 24px;
+      display: inline-block;
+    }
+    .success-title {
+      color: #744f8c;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .success-text {
+      color: #444;
+      font-size: 1.1em;
+      margin-bottom: 32px;
+    }
+    .success-btn {
+      background: #744f8c;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 1rem 0;
+      font-size: 1.1em;
+      font-weight: 700;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-top: 8px;
+    }
+    .success-btn:hover {
+      background: #5d3e7e;
+    }
+  </style>
+</head>
+<body>
+  <div class="centered-container">
+    <img src="images/succes.svg" alt="Success" class="status-icon" style="width: 80px; height: 80px; margin-bottom: 24px;"/>
+    <div class="success-title" id="success-title">Payment Successful</div>
+    <div class="success-text" id="success-text">Thank you for your payment! Your registration is confirmed. A confirmation email has been sent to you.</div>
+    <button class="success-btn" onclick="window.location.href='index.html'" id="success-btn">Go to Home</button>
+  </div>
+  <script>
+    const lang = sessionStorage.getItem('lang') || 'en';
+    const t = {
+      en: {
+        title: 'Payment Successful',
+        text: 'Thank you for your payment! Your registration is confirmed. A confirmation email has been sent to you.',
+        btn: 'Go to Home'
+      },
+      ro: {
+        title: 'Plată efectuată cu succes',
+        text: 'Vă mulțumim pentru plată! Înregistrarea dvs. a fost confirmată. Veți primi un email de confirmare.',
+        btn: 'Înapoi la pagina principală'
+      }
+    };
+    document.getElementById('success-title').innerText = t[lang].title;
+    document.getElementById('success-text').innerText = t[lang].text;
+    document.getElementById('success-btn').innerText = t[lang].btn;
+  </script>
+</body>
+</html> 
