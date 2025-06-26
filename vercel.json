@@ -1,10 +1,13 @@
 {
-  "redirects": [
-    { "source": "/index", "destination": "/", "permanent": true },
-    { "source": "/index.html", "destination": "/", "permanent": true }
-  ],
-  "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/(.*)", "destination": "/$1.html" }
-  ]
-}
+    "rewrites": [
+      { "source": "/(.*)", "destination": "/$1.html" },
+      { "source": "/index", "destination": "/", "permanent": true },
+      { "source": "/index.html", "destination": "/", "permanent": true }
+    ],
+    "redirects": [
+      { "source": "/(.*)\\.html", "destination": "/$1", "permanent": true },
+      { "source": "/", "destination": "/index.html" },
+      { "source": "/(.*)", "destination": "/$1.html" }
+    ]
+  }
+  
