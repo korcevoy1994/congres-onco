@@ -2,6 +2,19 @@
   AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json image/svg+xml
 </IfModule>
 
+# Убираем .html из URL (чтобы site.com/page работал как site.com/page.html)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Если запрошен несуществующий файл/папка и нет расширения
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_URI} !\.[a-zA-Z0-9]{2,4}$
+
+  # Пробуем добавить .html
+  RewriteRule ^([^/]+)$ $1.html [L]
+</IfModule>
+
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresByType text/html "access plus 1h"
