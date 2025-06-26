@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/normalize.css" rel="stylesheet">
+  <link href="css/framework.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
+  <link href="css/modal.css" rel="stylesheet">
+  <style>
+    .checkout-container {
+      max-width: 480px;
+      margin: 48px auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px 0 rgba(116,79,140,0.08);
+      padding: 32px 24px 24px 24px;
+      font-family: inherit;
+    }
+    .checkout-title {
+      color: #744f8c;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .checkout-section-title {
+      color: #744f8c;
+      font-weight: 700;
+      margin-top: 24px;
+      margin-bottom: 8px;
+      font-size: 1.1em;
+    }
+    .checkout-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 16px 0;
+    }
+    .checkout-list li {
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1em;
+    }
+    .checkout-label {
+      color: #888;
+      font-weight: 500;
+    }
+    .checkout-value {
+      color: #222;
+      font-weight: 600;
+    }
+    .checkout-btn {
+      width: 100%;
+      margin-top: 32px;
+      background: #744f8c;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 1rem 0;
+      font-size: 1.1em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .checkout-btn:hover {
+      background: #5d3e7e;
+    }
+    .checkout-back-link {
+      display: block;
+      text-decoration: none;
+      color: #744f8c;
+      font-weight: 600;
+      margin-bottom: 24px;
+      transition: color 0.15s;
+    }
+    .checkout-back-link:hover {
+      color: #5d3e7e;
+    }
+  </style>
+</head>
+<body>
+  <div style="text-align: center; margin: 48px 0 24px 0;">
+    <a href="index.html"><img src="images/12-1.png" alt="Site Logo" style="max-width: 200px; height: auto;"></a>
+  </div>
+  <div class="checkout-container">
+    <a href="javascript:history.back()" class="checkout-back-link">‹ Back</a>
+    <div class="checkout-title">Checkout</div>
+    <div class="checkout-section-title">Ticket</div>
+    <ul class="checkout-list">
+      <li><span class="checkout-label">Type:</span> <span class="checkout-value" id="ticket-type"></span></li>
+      <li><span class="checkout-label">Price:</span> <span class="checkout-value" id="ticket-price"></span></li>
+    </ul>
+    <div class="checkout-section-title">Your Information</div>
+    <ul class="checkout-list" id="user-info-list"></ul>
+    <button class="checkout-btn" id="pay-btn">Pay</button>
+  </div>
+  <script>
+    // Получаем данные из sessionStorage (или localStorage)
+    const ticketType = sessionStorage.getItem('ticketType') || '';
+    const ticketPrice = sessionStorage.getItem('ticketPrice') || '';
+    const userData = JSON.parse(sessionStorage.getItem('userData') || '{}');
+
+    document.getElementById('ticket-type').textContent = ticketType;
+    document.getElementById('ticket-price').textContent = ticketPrice;
+
+    const userInfoList = document.getElementById('user-info-list');
+    for (const [key, value] of Object.entries(userData)) {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="checkout-label">${key.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}:</span> <span class="checkout-value">${value}</span>`;
+      userInfoList.appendChild(li);
+    }
+
+    document.getElementById('pay-btn').addEventListener('click', function() {
+      alert('Redirecting to payment...');
+      // Здесь будет редирект на платёжку
+    });
+  </script>
+</body>
+</html> 
